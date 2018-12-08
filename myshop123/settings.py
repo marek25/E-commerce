@@ -25,7 +25,8 @@ SECRET_KEY = 'lqbcsgypl93z*2ca@85*%nm2!t3ij04d!rb&bt)ax)s5xa^fi9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['1bcc2055.ngrok.io', 'localhost', 'edbe967d.ngrok.io', 'cbb102a0.ngrok.io']
+
 
 
 # Application definition
@@ -39,7 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop',
     'cart',
-    'orders'
+    'orders',
+    'paypal.standard.ipn',
+    'payment',
+    'coupons',
+    'parler',
+    'rosetta',
 #    'shop.apps.ShopConfig',
 #    'cart.apps.CartConfig',
 #    'orders.apps.OrdersConfig',
@@ -51,7 +57,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -110,7 +118,23 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+from django.utils.translation import gettext_lazy as _
+#USE_I18N = True
+PATH="/usr/local/Cellar/gettext/0.19.8.1"
+#/usr/local/Cellar/gettext/0.19.8.1
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('es', 'Spanish'),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
+
+
 
 TIME_ZONE = 'UTC'
 
@@ -126,9 +150,33 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 CART_SESSION_ID = 'cart'
 
+#django-paypal settings
+PAYPAL_RECEIVER_EMAIL = 'appdocc@gmail.com'
+PAYPAL_TEST = True
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# django-parler
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'es'},
+    ),
+    'default': {
+        'fallback': 'en',
+        'hide_untranslated': False,
+    }
+}
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
