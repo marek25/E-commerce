@@ -22,6 +22,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 
+
+
 urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(_(r'^cart/'), include('cart.urls', namespace='cart')),
@@ -29,7 +31,7 @@ urlpatterns = i18n_patterns(
     url(r'^paypal/', include('paypal.standard.ipn.urls')),
     url(_(r'^payment/'), include('payment.urls', namespace='payment')),
     url(_(r'^coupons/'), include('coupons.urls', namespace='coupons')),
-   # url(r'^rosetta/', include('rosetta.urls')),
+    url(r'^rosetta/', include('rosetta.urls')),
     url(r'^', include('shop.urls', namespace='shop')),
 
 )
